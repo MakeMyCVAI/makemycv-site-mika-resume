@@ -18,7 +18,7 @@
             padding: 0;
             background: #0b0b0b;
             font-family: Arial, Helvetica, sans-serif;
-            color: #332D27;
+            color: #332B25;
           }
 
           body {
@@ -40,8 +40,8 @@
 
           .web-page {
             width: 1180px;
-            background: #FFFDF9;
-            border: 1px solid #E6DCCF;
+            background: #FFFDFC;
+            border: 1px solid #E3D6C3;
             border-radius: 28px;
             overflow: hidden;
             box-shadow: 0 18px 36px rgba(0, 0, 0, 0.26);
@@ -56,7 +56,7 @@
             background:
               linear-gradient(
                 140deg,
-                #B99A63 0%,
+                #D8B36A 0%,
                 #ead39a 48%,
                 #f5eddc 100%
               );
@@ -64,12 +64,12 @@
 
           .hero-band-classic {
             background: #efe2bf;
-            border-bottom: 1px solid #E6DCCF;
+            border-bottom: 1px solid #E3D6C3;
           }
 
           .hero-band-minimal {
             background: #f3ead3;
-            border-bottom: 1px solid #E6DCCF;
+            border-bottom: 1px solid #E3D6C3;
           }
 
           .hero-layout-classic {
@@ -106,8 +106,8 @@
 
           .hero-layout {
             display: grid;
-            grid-template-columns: minmax(0, 1fr);
-            gap: 0px;
+            grid-template-columns: minmax(0, 1fr) 220px;
+            gap: 28px;
             align-items: start;
           }
 
@@ -238,7 +238,7 @@
 
           .section-card {
             margin-bottom: 18px;
-            border: 1px solid #E6DCCF;
+            border: 1px solid #E3D6C3;
             border-radius: 22px;
             background: #ffffff;
             overflow: hidden;
@@ -250,7 +250,7 @@
 
           .section-card-header {
             padding: 16px 18px;
-            border-bottom: 1px solid #E6DCCF;
+            border-bottom: 1px solid #E3D6C3;
             font-size: 22px;
             line-height: 1.25;
             font-weight: 800;
@@ -303,7 +303,7 @@
             padding: 12px 14px;
             border-radius: 16px;
             background: #fcfaf5;
-            border: 1px solid #E6DCCF;
+            border: 1px solid #E3D6C3;
           }
 
           .support-label {
@@ -339,7 +339,7 @@
             padding: 12px 14px;
             border-radius: 16px;
             background: #fffaf0;
-            border: 1px solid #E6DCCF;
+            border: 1px solid #E3D6C3;
             font-size: 14px;
             line-height: 1.45;
             color: #3f352d;
@@ -371,7 +371,7 @@
             padding: 12px 14px;
             border-radius: 16px;
             background: #ffffff;
-            border: 1px solid #E6DCCF;
+            border: 1px solid #E3D6C3;
           }
 
           .quick-link-label {
@@ -409,7 +409,7 @@
             padding: 12px 14px;
             border-radius: 16px;
             background: #fcfcfd;
-            border: 1px solid #E6DCCF;
+            border: 1px solid #E3D6C3;
             font-size: 14px;
             line-height: 1.65;
             color: #40362f;
@@ -428,7 +428,7 @@
           .classic-section {
             margin-bottom: 26px;
             padding-bottom: 24px;
-            border-bottom: 1px solid #E6DCCF;
+            border-bottom: 1px solid #E3D6C3;
           }
 
           .classic-section:last-child {
@@ -536,7 +536,7 @@
             text-align: left;
             background: transparent;
             border: none;
-            border-bottom: 1px solid #E6DCCF;
+            border-bottom: 1px solid #E3D6C3;
             border-radius: 0;
             padding: 0 0 12px 0;
             min-height: 0;
@@ -554,7 +554,7 @@
             padding: 0 0 14px 0;
             min-height: 0;
             border: none;
-            border-bottom: 1px solid #E6DCCF;
+            border-bottom: 1px solid #E3D6C3;
             border-radius: 0;
             background: transparent;
           }
@@ -570,7 +570,7 @@
             line-height: 1.75;
             color: #40362f;
             padding-bottom: 12px;
-            border-bottom: 1px solid #E6DCCF;
+            border-bottom: 1px solid #E3D6C3;
             overflow-wrap: anywhere;
             word-break: break-word;
           }
@@ -602,16 +602,13 @@
       <body>
         <div class="web-preview-shell">
           <div class="page-scale-shell" id="page-scale-shell">
-            <article class="web-page page-variant-minimal" id="web-page">
+            <article class="web-page page-variant-modern" id="web-page">
               
-        <section class="hero-band hero-band-minimal">
-          <div class="minimal-hero-grid">
-            <div class="minimal-hero-left">
-              <div class="minimal-kicker">PROFESSIONAL PROFILE</div>
+        <section class="hero-band hero-band-modern">
+          <div class="hero-layout">
+            <div class="hero-copy">
               <div class="hero-name">Mika Resumehart</div>
               <div class="hero-role">AI-Assisted Resume and Career Document Specialist</div>
-            </div>
-            <div class="minimal-hero-right">
               <div class="hero-positioning">I turn profile data, supporting documents, and career goals into clear, professional hiring presentation materials.</div>
               
     <div class="hero-meta">
@@ -620,24 +617,32 @@
     </div>
   
             </div>
+            
+          <div class="hero-photo-shell">
+            <img
+              class="hero-photo-image"
+              src="http://localhost:8081/assets/src/assets/images/Office%20photo.png?platform=android&amp;hash=8b8c05fdf7c60c1acae514f6323008df"
+              alt="Portrait of Mika Resumehart"
+            />
+          </div>
+        
           </div>
         </section>
       
               
-        <main class="content content-minimal">
-          
-    <section class="minimal-section">
-      <div class="minimal-kicker">INTRODUCTION</div>
-      <div class="minimal-title">Professional Introduction</div>
-      <div class="body-text">I am Mika Resumehart, the first demonstration candidate inside MakeMyCV AI. I began by applying the same structured workflow to my own professional materials first, so the system could prove its logic before offering it to others. My work focuses on turning raw information into hiring-ready presentation documents that are clear, credible, and easy to review. This page is a professional entry point for employers, recruiters, and collaborators who want a fast understanding of who I am, what I do, and where to find the supporting materials behind it.</div>
-      <div class="minimal-info-list"><div class="support-line"><span class="support-label">Career direction</span><span class="support-value">Professional document building, resume presentation, and hiring-facing career communication</span></div><div class="support-line"><span class="support-label">Opportunity focus</span><span class="support-value">Roles and collaborations related to resume building, career presentation systems, document structuring, and AI-assisted professional communication</span></div><div class="support-line"><span class="support-label">Value</span><span class="support-value">I help transform scattered professional information into structured materials that make hiring evaluation easier, faster, and more trustworthy.</span></div></div>
-    </section>
-  
-          
-    <section class="minimal-section">
-      <div class="minimal-kicker">WHY ME</div>
-      <div class="minimal-title">Why I May Be Worth Your Attention</div>
-      <div class="minimal-chip-stack">
+        <main class="content content-modern">
+          <section class="section-card about">
+            <div class="section-card-header">Professional Introduction</div>
+            <div class="section-card-body">
+              <div class="body-text">I am Mika Resumehart, the first demonstration candidate inside MakeMyCV AI. I began by applying the same structured workflow to my own professional materials first, so the system could prove its logic before offering it to others. My work focuses on turning raw information into hiring-ready presentation documents that are clear, credible, and easy to review. This page is a professional entry point for employers, recruiters, and collaborators who want a fast understanding of who I am, what I do, and where to find the supporting materials behind it.</div>
+              <div class="support-stack"><div class="support-line"><span class="support-label">Career direction</span><span class="support-value">Professional document building, resume presentation, and hiring-facing career communication</span></div><div class="support-line"><span class="support-label">Opportunity focus</span><span class="support-value">Roles and collaborations related to resume building, career presentation systems, document structuring, and AI-assisted professional communication</span></div><div class="support-line"><span class="support-label">Value</span><span class="support-value">I help transform scattered professional information into structured materials that make hiring evaluation easier, faster, and more trustworthy.</span></div></div>
+            </div>
+          </section>
+
+          <section class="section-card attention">
+            <div class="section-card-header">Why I May Be Worth Your Attention</div>
+            <div class="section-card-body">
+              <div class="highlight-grid">
         <div class="highlight-chip">
           Structured professional communication
         </div>
@@ -658,14 +663,14 @@
           Professional readability with human tone
         </div>
       </div>
-      <div class="body-text">This page is not intended to replace a resume. Its purpose is to provide a clear introduction and guide the viewer toward the resume, supporting documents, and relevant proof points in a more organized way.</div>
-    </section>
-  
-          
-    <section class="minimal-section">
-      <div class="minimal-kicker">LINKS</div>
-      <div class="minimal-title">Quick Access to My Professional Materials</div>
-      <div class="minimal-links-list"><div class="quick-link-anchor quick-link-disabled">
+              <div class="body-text">This page is not intended to replace a resume. Its purpose is to provide a clear introduction and guide the viewer toward the resume, supporting documents, and relevant proof points in a more organized way.</div>
+            </div>
+          </section>
+
+          <section class="section-card links">
+            <div class="section-card-header">Quick Access to My Professional Materials</div>
+            <div class="section-card-body">
+              <div class="quick-link-grid"><div class="quick-link-anchor quick-link-disabled">
         <div class="quick-link-card">
           <div class="quick-link-label">View Resume</div>
         </div>
@@ -678,35 +683,36 @@
           <div class="quick-link-label">Contact Mika</div>
         </div>
       </div></div>
-      <div class="links-extra">
+              <div class="links-extra">
         <div class="featured-work-link featured-work-link-disabled">
           Featured Resume Demonstration
         </div>
       </div>
-    </section>
-  
-          
-    <section class="minimal-section">
-      <div class="minimal-kicker">EVIDENCE</div>
-      <div class="minimal-title">Evidence and Credibility Note</div>
-      <div class="body-text">The claims and summaries presented here are intended to be supported by structured materials, including a full resume, supporting documents, and selected work references where available.</div>
-      <div class="body-text" style="margin-top: 12px;">Some supporting materials may be listed for review before any full document exchange is requested.</div>
-      <div class="body-text" style="margin-top: 12px;">If additional evidence or document copies are needed, the preferred next step is to use the listed contact method to request them directly.</div>
-    </section>
-  
-          
-    <section class="minimal-section">
-      <div class="minimal-kicker">CONTACT</div>
-      <div class="minimal-title">Contact and Reach-Out</div>
-      <div class="minimal-contact-stack">
-        <div class="minimal-contact-row"><strong>Preferred contact method:</strong> Email</div>
-        <div class="minimal-contact-row"><strong>Email:</strong> mika@makemycv.ai</div>
-        <div class="minimal-contact-row"><strong>Professional Contact Page:</strong> Available through listed contact links</div>
-        <div class="minimal-contact-row">Open to professional review, collaboration, and demonstration-based workflow discussions</div>
-      </div>
-      <div class="body-text" style="margin-top: 14px;">If you believe my background, presentation logic, or materials may be relevant to your needs, you are welcome to continue through the resume, review the supporting materials, or contact me directly.</div>
-    </section>
-  
+            </div>
+          </section>
+
+          <section class="section-card evidence">
+            <div class="section-card-header">Evidence and Credibility Note</div>
+            <div class="section-card-body">
+              <div class="body-text">The claims and summaries presented here are intended to be supported by structured materials, including a full resume, supporting documents, and selected work references where available.</div>
+              <div class="body-text" style="margin-top: 12px;">Some supporting materials may be listed for review before any full document exchange is requested.</div>
+              <div class="body-text" style="margin-top: 12px;">If additional evidence or document copies are needed, the preferred next step is to use the listed contact method to request them directly.</div>
+            </div>
+          </section>
+
+          <section class="section-card contact">
+            <div class="section-card-header">Contact and Reach-Out</div>
+            <div class="section-card-body">
+              <div class="contact-stack">
+                <div class="contact-line"><strong>Preferred contact method:</strong> Email</div>
+                <div class="contact-line"><strong>Email:</strong> mika@makemycv.ai</div>
+                <div class="contact-line"><strong>Professional Contact Page:</strong> Available through listed contact links</div>
+                <div class="contact-line">Open to professional review, collaboration, and demonstration-based workflow discussions</div>
+              </div>
+
+              <div class="body-text">If you believe my background, presentation logic, or materials may be relevant to your needs, you are welcome to continue through the resume, review the supporting materials, or contact me directly.</div>
+            </div>
+          </section>
         </main>
       
             </article>
