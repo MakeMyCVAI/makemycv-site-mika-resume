@@ -1,0 +1,16 @@
+{
+  "ownerId": "mika-resume",
+  "siteVersion": 1,
+  "lastUpdated": "2026-04-20T06:54:44.198Z",
+  "artifacts": {
+    "resume": {
+      "path": "/resume/",
+      "metadataPath": "/resume/metadata.json"
+    },
+    "coverPage": {
+      "path": "/cover-page/",
+      "metadataPath": "/cover-page/metadata.json"
+    }
+  },
+  "assetsBasePath": "/assets/"
+}
