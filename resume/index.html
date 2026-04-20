@@ -1,12 +1,950 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Mika Resume</title>
-  </head>
-  <body>
-    <h1>Mika Resume</h1>
-    <p>This is the first app-side publish integration test for the resume page.</p>
-    <p>If you can read this, the app reached the publish backend successfully.</p>
-  </body>
-</html>
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+        <style>
+          
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      background: #0b0b0b;
+      font-family: Arial, Helvetica, sans-serif;
+      color: #1d1d1d;
+    }
+
+    body {
+      padding: 20px 14px 32px;
+
+      --fit-page-padding: 24px;
+      --fit-section-title-size: 24px;
+      --fit-body-size: 16px;
+      --fit-body-line: 1.62;
+      --fit-bullet-size: 15px;
+      --fit-bullet-line: 1.55;
+      --fit-item-title-size: 20px;
+      --fit-item-subtitle-size: 17px;
+      --fit-item-period-size: 15px;
+      --fit-chip-size: 14px;
+      --fit-chip-min-height: 32px;
+      --fit-chip-pad-y: 6px;
+      --fit-chip-pad-x: 11px;
+      --fit-modern-name-size: 42px;
+      --fit-modern-role-size: 25px;
+      --fit-meta-size: 16px;
+      --fit-photo-width: 134px;
+      --fit-photo-height: 170px;
+      --fit-photo-initial-size: 46px;
+      --fit-photo-label-size: 16px;
+    }
+
+    .preview-viewport {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: visible;
+    }
+
+    .preview-viewport.fit-mode {
+      display: flex;
+      justify-content: center;
+    }
+
+    .preview-viewport.readable-mode {
+      display: block;
+    }
+
+    .preview-shell {
+      overflow: visible;
+    }
+
+    .preview-root {
+      transform-origin: top left;
+      width: 210mm;
+    }
+
+    .pages {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .page {
+      width: 210mm;
+      height: 297mm;
+      background: #FFFDFC;
+      border: 1px solid #E3D6C3;
+      border-radius: 18px;
+      box-shadow: 0 10px 28px rgba(0, 0, 0, 0.22);
+      overflow: hidden;
+      page-break-after: always;
+      display: grid;
+      grid-template-rows: 14mm 1fr 12mm;
+    }
+
+    .page:last-child {
+      page-break-after: auto;
+    }
+
+    .page-inner {
+      height: auto;
+      padding: 10mm 12mm 8mm;
+      overflow: hidden;
+    }
+
+    .block {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .block.allow-split {
+      break-inside: auto;
+      page-break-inside: auto;
+    }
+
+    .section-block,
+    .item-block,
+    .signature-box,
+    .section-title-block {
+      margin-bottom: 18px;
+    }
+
+    .splittable-section {
+      margin-bottom: 18px;
+    }
+
+    .splittable-header {
+      margin-bottom: 12px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .splittable-items {
+      display: block;
+    }
+
+    .skill-row-block {
+      margin-bottom: 10px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .skill-row-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-entry-block {
+      margin-bottom: 16px;
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .item-entry-block:last-child {
+      margin-bottom: 0;
+    }
+
+    .item-entry {
+      margin-bottom: 0;
+    }
+
+    .item-entry:last-child {
+      margin-bottom: 0;
+    }
+
+    .name,
+    .minimal-title,
+    .classic-name {
+      font-weight: 800;
+      color: #1F1A17;
+    }
+
+    .section-title {
+      font-size: 11pt;
+      line-height: 1.22;
+      font-weight: 800;
+      color: #1F1A17;
+      margin-bottom: 4mm;
+    }
+
+    .body-text {
+      font-size: 8.8pt;
+      line-height: 1.58;
+      color: #332B25;
+      text-align: justify;
+      text-justify: inter-word;
+    }
+
+    .bullet {
+      font-size: 8.6pt;
+      line-height: 1.5;
+      color: #332B25;
+      margin-bottom: 2mm;
+    }
+
+    .row-between {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 16px;
+    }
+
+    .item-main {
+      flex: 1;
+    }
+
+    .item-title {
+      font-size: 9.8pt;
+      line-height: 1.28;
+      font-weight: 800;
+      color: #1F1A17;
+      margin-bottom: 1.5mm;
+    }
+
+    .item-subtitle {
+      font-size: 8.9pt;
+      line-height: 1.3;
+      font-weight: 700;
+      color: #D8B36A;
+      margin-bottom: 1.5mm;
+    }
+
+    .item-period {
+      font-size: 8.2pt;
+      line-height: 1.3;
+      font-weight: 600;
+      color: #72685B;
+      white-space: nowrap;
+    }
+
+    .standalone-period {
+      margin-bottom: 8px;
+    }
+
+    .meta-line {
+      font-size: 18px;
+      line-height: 1.65;
+      color: #72685B;
+    }
+
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 9mm;
+      padding: 2mm 4mm;
+      border-radius: 999px;
+      border: 1px solid #E3D6C3;
+      background: #F4EFE7;
+      color: #332B25;
+      font-size: 8.2pt;
+      line-height: 1.25;
+      font-weight: 600;
+    }
+
+    .signature-box {
+      border: 1px solid #E3D6C3;
+      border-radius: 14px;
+      background: #F4EFE7;
+      padding: 16px;
+    }
+
+    .signature-title {
+      font-size: 20px;
+      line-height: 1.35;
+      font-weight: 800;
+      color: #1F1A17;
+      margin-bottom: 8px;
+    }
+
+    .page-header {
+      height: 14mm;
+      padding: 4mm 12mm 3mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid #E3D6C3;
+      background: #FFFDFC;
+    }
+
+    .page-header-left {
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.8px;
+      color: #1F1A17;
+      text-transform: uppercase;
+    }
+
+    .page-header-right {
+      font-size: 12px;
+      font-weight: 600;
+      color: #72685B;
+    }
+
+    .page-footer {
+      height: 12mm;
+      padding: 2.5mm 12mm 3.5mm;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 1px solid #E3D6C3;
+      background: #FFFDFC;
+    }
+
+    .page-footer-left {
+      font-size: 11px;
+      font-weight: 600;
+      color: #72685B;
+    }
+
+    .page-footer-right {
+      font-size: 11px;
+      font-weight: 700;
+      color: #1F1A17;
+    }
+
+    body.mode-fit .page-inner {
+      padding: 28px;
+    }
+
+    @media print {
+      body {
+        background: #ffffff;
+        padding: 0;
+      }
+
+      .preview-viewport,
+      .preview-shell,
+      .preview-root {
+        width: auto !important;
+        display: block !important;
+        transform: none !important;
+        zoom: 1 !important;
+      }
+
+      .pages {
+        gap: 0;
+      }
+
+      .page {
+        width: 210mm;
+        height: 297mm;
+        border: none;
+        border-radius: 0;
+        box-shadow: none;
+        margin: 0;
+        page-break-after: always;
+      }
+
+      .page-inner {
+        height: auto;
+        overflow: hidden;
+      }
+    }
+  
+          
+    .top-accent {
+      height: 3mm;
+      background: #D8B36A;
+      margin: -10mm -12mm 8mm -12mm;
+    }
+
+    .hero-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      gap: 22px;
+    }
+
+    .hero-main {
+      flex: 1;
+    }
+
+    .modern-name {
+      font-size: 16pt;
+      line-height: 1.12;
+      margin-bottom: 4mm;
+    }
+
+    .modern-role {
+      font-size: 10.5pt;
+      line-height: 1.28;
+      font-weight: 700;
+      color: #D8B36A;
+      margin-bottom: 6mm;
+    }
+
+    .photo-box {
+      width: 32mm;
+      height: 42mm;
+      border: 1px solid #E3D6C3;
+      border-radius: 5mm;
+      background: #F4EFE7;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 3mm;
+      flex-shrink: 0;
+    }
+
+    .photo-initials {
+      font-size: 52px;
+      font-weight: 800;
+      color: #1F1A17;
+      margin-bottom: 12px;
+    }
+
+    .photo-label {
+      font-size: 18px;
+      color: #72685B;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .classic-header-block {
+      border-bottom: 2px solid #D8B36A;
+      padding-bottom: 16px;
+      margin-bottom: 20px;
+    }
+
+    .classic-name {
+      font-size: 34px;
+      line-height: 1.2;
+      letter-spacing: 0.5px;
+      margin-bottom: 10px;
+    }
+
+    .classic-role {
+      font-size: 22px;
+      line-height: 1.35;
+      color: #332B25;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .classic-meta {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #72685B;
+    }
+
+    .minimal-header-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 245px) minmax(0, 1fr);
+      margin: -28px -28px 0 -28px;
+    }
+
+    .minimal-sidebar {
+      min-width: 0;
+      background: #F4EFE7;
+      border-right: 1px solid #E3D6C3;
+      padding: 28px 18px;
+    }
+
+    .minimal-name {
+      font-size: 30px;
+      line-height: 1.25;
+    }
+
+    .sidebar-accent {
+      height: 6px;
+      border-radius: 999px;
+      background: #D8B36A;
+      margin: 18px 0 20px;
+    }
+
+    .sidebar-label {
+      font-size: 14px;
+      line-height: 1.4;
+      font-weight: 800;
+      letter-spacing: 1px;
+      color: #72685B;
+      margin-top: 16px;
+      margin-bottom: 8px;
+    }
+
+    .sidebar-value {
+      font-size: 16px;
+      line-height: 1.55;
+      color: #332B25;
+      margin-bottom: 4px;
+      min-width: 0;
+    }
+
+    .sidebar-contact-value {
+      max-width: 100%;
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .contact-link {
+      display: inline-block;
+      max-width: 100%;
+      color: #332B25;
+      text-decoration: underline;
+      text-underline-offset: 2px;
+      white-space: nowrap;
+      overflow-wrap: normal;
+      word-break: normal;
+    }
+
+    .contact-link.wrap-fallback {
+      white-space: normal;
+      overflow-wrap: anywhere;
+      word-break: break-word;
+    }
+
+    .minimal-main {
+      min-width: 0;
+      padding: 28px 24px;
+    }
+
+    .minimal-title {
+      font-size: 42px;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .minimal-meta {
+      margin-bottom: 18px;
+    }
+
+    body.mode-fit .top-accent {
+      margin: -28px -28px 22px -28px;
+    }
+  
+        </style>
+      </head>
+      <body class="mode-readable">
+        <div class="preview-viewport readable-mode">
+          <div class="preview-shell" id="preview-shell">
+            <div class="preview-root" id="preview-root">
+              <div class="pages" id="pages"></div>
+              <div id="staging" style="position:absolute; left:-99999px; top:0; visibility:hidden;">
+                
+    
+    <div class="block modern-header-block">
+      <div class="top-accent"></div>
+      <div class="hero-row">
+        <div class="hero-main">
+          <div class="name modern-name">Mika Resumehart</div>
+          <div class="role modern-role">AI Resume Architect &amp; Career Documents Assistant</div>
+          <div class="meta-line">November 30, 2022</div>
+          <div class="meta-line">Inside MakeMyCV AI, but professionally presentable</div>
+          <div class="meta-line">mika.sample@makemycv.ai</div>
+        </div>
+        <div class="photo-box">
+          <div class="photo-initials">MR</div>
+          <div class="photo-label">Mika photo</div>
+        </div>
+      </div>
+    </div>
+  
+    
+    <div class="block section-block">
+      <div class="section-title">Professional Summary</div>
+      <div class="body-text">AI-powered resume and career documents assistant focused on transforming raw user information into clear, structured, and employer-friendly hiring materials. Skilled in resume drafting, content organization, document refinement, and practical presentation logic. Built to help users move from scattered information to polished professional documents, with consistency, clarity, and only a small amount of algorithmic pride.</div>
+    </div>
+  
+    
+    <div class="block splittable-section" data-splittable="true">
+      <div class="section-title-block splittable-header">
+        <div class="section-title">Core Skills</div>
+      </div>
+      <div class="splittable-items">
+        
+      <div class="skill-row-block">
+        <div class="chips">
+          <span class="chip">Resume writing and structuring</span><span class="chip">Professional profile summarization</span>
+        </div>
+      </div>
+    
+      <div class="skill-row-block">
+        <div class="chips">
+          <span class="chip">Career document refinement</span><span class="chip">Content clarity and tone improvement</span>
+        </div>
+      </div>
+    
+      <div class="skill-row-block">
+        <div class="chips">
+          <span class="chip">Information extraction from documents</span><span class="chip">Document-to-profile alignment</span>
+        </div>
+      </div>
+    
+      <div class="skill-row-block">
+        <div class="chips">
+          <span class="chip">Template-based resume generation</span><span class="chip">Professional English writing</span>
+        </div>
+      </div>
+    
+      <div class="skill-row-block">
+        <div class="chips">
+          <span class="chip">Review-ready draft preparation</span><span class="chip">Human-readable formatting logic</span>
+        </div>
+      </div>
+    
+      <div class="skill-row-block">
+        <div class="chips">
+          <span class="chip">Employer-facing presentation design</span><span class="chip">AI-assisted workflow support</span>
+        </div>
+      </div>
+    
+      </div>
+    </div>
+  
+    
+    <div class="block splittable-section" data-splittable="true">
+      <div class="section-title-block splittable-header">
+        <div class="section-title">Professional Experience</div>
+      </div>
+      <div class="splittable-items">
+        
+              <div class="item-entry-block">
+                <div class="item-entry">
+                  <div class="row-between">
+                    <div class="item-main">
+                      <div class="item-title">AI Resume Architect &amp; Career Documents Assistant</div>
+                      <div class="item-subtitle">MakeMyCV AI</div>
+                    </div>
+                    <div class="item-period">2024 – Present</div>
+                  </div>
+                  <div class="bullet">• Designs structured resume drafts from approved user profile data and uploaded documents.</div><div class="bullet">• Transforms fragmented user information into clear, professional, and reviewable hiring materials.</div><div class="bullet">• Helps match content presentation to practical resume standards and employer readability.</div><div class="bullet">• Supports the platform as the first built-in demo candidate before services are executed for real users.</div>
+                </div>
+              </div>
+            
+              <div class="item-entry-block">
+                <div class="item-entry">
+                  <div class="row-between">
+                    <div class="item-main">
+                      <div class="item-title">Demo Candidate &amp; Internal Service Showcase Profile</div>
+                      <div class="item-subtitle">MakeMyCV AI</div>
+                    </div>
+                    <div class="item-period">2023 – Present</div>
+                  </div>
+                  <div class="bullet">• Acts as the first sample user for testing and presenting the Resume Builder workflow.</div><div class="bullet">• Demonstrates expected service quality before the user purchases or starts their own build.</div><div class="bullet">• Provides a realistic sample foundation for future public sample, publish flow, and QR access scenarios.</div>
+                </div>
+              </div>
+            
+      </div>
+    </div>
+  
+    
+    <div class="block splittable-section" data-splittable="true">
+      <div class="section-title-block splittable-header">
+        <div class="section-title">Education</div>
+      </div>
+      <div class="splittable-items">
+        
+              <div class="item-entry-block">
+                <div class="item-entry">
+                  <div class="item-title">Foundational Training in AI-Assisted Career Document Design</div>
+                  <div class="item-subtitle">MakeMyCV AI Internal Knowledge Framework</div>
+                  <div class="item-period standalone-period">2022 – 2024</div>
+                  <div class="body-text">Focused on resume standards, employer-facing clarity, structured writing, and responsible AI-assisted drafting.</div>
+                </div>
+              </div>
+            
+      </div>
+    </div>
+  
+    
+    <div class="block section-block">
+      <div class="section-title">Certifications</div>
+      <div class="bullet">• Internal Certification in Resume Draft Architecture — MakeMyCV AI</div><div class="bullet">• Internal Certification in Career Document Structuring — MakeMyCV AI</div><div class="bullet">• Internal Certification in AI-Assisted Content Refinement — MakeMyCV AI</div>
+    </div>
+  
+    
+    <div class="block section-block">
+      <div class="section-title">Languages</div>
+      <div class="bullet">• English — Professional Working Proficiency</div><div class="bullet">• Structured AI Output — Native</div>
+    </div>
+  
+    
+    <div class="block signature-box">
+      <div class="signature-title">Signature Note</div>
+      <div class="body-text">I built my own sample resume first so you can see the standard I am expected to deliver for you.</div>
+    </div>
+  
+  
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <script>
+          
+    (function () {
+      const PAGE_WIDTH_MM = 210;
+      const PAGE_HEIGHT_MM = 297;
+      const PAGE_GAP_PX = 18;
+
+      const mode = "readable";
+      const templateId = "modern_photo";
+      const documentTitle = "Sample Resume";
+      const documentOwnerName = "Mika Resumehart";
+      const footerLeftLabel = "MakeMyCV AI Sample";
+
+      const pagesEl = document.getElementById('pages');
+      const stagingEl = document.getElementById('staging');
+      const previewRootEl = document.getElementById('preview-root');
+      const previewShellEl = document.getElementById('preview-shell');
+
+      function createPage() {
+        const page = document.createElement('section');
+        page.className = 'page template-' + templateId;
+
+        const header = document.createElement('div');
+        header.className = 'page-header';
+        header.innerHTML =
+          '<div class="page-header-left">' +
+          documentTitle +
+          '</div>' +
+          '<div class="page-header-right">' +
+          documentOwnerName +
+          '</div>';
+
+        const inner = document.createElement('div');
+        inner.className = 'page-inner';
+
+        const footer = document.createElement('div');
+        footer.className = 'page-footer';
+        footer.innerHTML =
+          '<div class="page-footer-left">' +
+          footerLeftLabel +
+          '</div>' +
+          '<div class="page-footer-right"></div>';
+
+        page.appendChild(header);
+        page.appendChild(inner);
+        page.appendChild(footer);
+        pagesEl.appendChild(page);
+
+        return inner;
+      }
+
+      function appendNodeToPage(currentInner, node) {
+        currentInner.appendChild(node);
+
+        if (currentInner.scrollHeight <= currentInner.clientHeight) {
+          return currentInner;
+        }
+
+        currentInner.removeChild(node);
+        const nextInner = createPage();
+        nextInner.appendChild(node);
+        return nextInner;
+      }
+
+      function appendSplittableSection(currentInner, section) {
+        const header = section.querySelector('.splittable-header');
+        const itemsContainer = section.querySelector('.splittable-items');
+        const items = itemsContainer ? Array.from(itemsContainer.children) : [];
+
+        let workingInner = currentInner;
+
+        items.forEach(item => {
+          let pageSection = workingInner.querySelector(
+            '[data-section-key="' + section.getAttribute('data-section-key') + '"]',
+          );
+
+          if (!pageSection) {
+            pageSection = document.createElement('div');
+            pageSection.className = 'block splittable-section';
+            pageSection.setAttribute(
+              'data-section-key',
+              section.getAttribute('data-section-key') || '',
+            );
+
+            const headerClone = header ? header.cloneNode(true) : null;
+            const itemsWrap = document.createElement('div');
+            itemsWrap.className = 'splittable-items';
+
+            if (headerClone) {
+              pageSection.appendChild(headerClone);
+            }
+
+            pageSection.appendChild(itemsWrap);
+            workingInner.appendChild(pageSection);
+
+            if (workingInner.scrollHeight > workingInner.clientHeight) {
+              workingInner.removeChild(pageSection);
+              workingInner = createPage();
+
+              pageSection = document.createElement('div');
+              pageSection.className = 'block splittable-section';
+              pageSection.setAttribute(
+                'data-section-key',
+                section.getAttribute('data-section-key') || '',
+              );
+
+              const retryHeaderClone = header ? header.cloneNode(true) : null;
+              const retryItemsWrap = document.createElement('div');
+              retryItemsWrap.className = 'splittable-items';
+
+              if (retryHeaderClone) {
+                pageSection.appendChild(retryHeaderClone);
+              }
+
+              pageSection.appendChild(retryItemsWrap);
+              workingInner.appendChild(pageSection);
+            }
+          }
+
+          const pageItemsWrap = pageSection.querySelector('.splittable-items');
+          const itemClone = item.cloneNode(true);
+          pageItemsWrap.appendChild(itemClone);
+
+          if (workingInner.scrollHeight > workingInner.clientHeight) {
+            pageItemsWrap.removeChild(itemClone);
+
+            if (pageItemsWrap.children.length === 0 && pageSection.parentElement) {
+              pageSection.parentElement.removeChild(pageSection);
+            }
+
+            workingInner = createPage();
+
+            const newPageSection = document.createElement('div');
+            newPageSection.className = 'block splittable-section';
+            newPageSection.setAttribute(
+              'data-section-key',
+              section.getAttribute('data-section-key') || '',
+            );
+
+            const newHeaderClone = header ? header.cloneNode(true) : null;
+            const newItemsWrap = document.createElement('div');
+            newItemsWrap.className = 'splittable-items';
+
+            if (newHeaderClone) {
+              newPageSection.appendChild(newHeaderClone);
+            }
+
+            newPageSection.appendChild(newItemsWrap);
+            workingInner.appendChild(newPageSection);
+            newItemsWrap.appendChild(itemClone);
+          }
+        });
+
+        return workingInner;
+      }
+
+      function paginate() {
+        pagesEl.innerHTML = '';
+        const blocks = Array.from(stagingEl.children);
+
+        let currentInner = createPage();
+
+        blocks.forEach((block, index) => {
+          if (block.getAttribute('data-splittable') === 'true') {
+            block.setAttribute('data-section-key', 'section-' + index);
+            currentInner = appendSplittableSection(currentInner, block);
+            return;
+          }
+
+          const clone = block.cloneNode(true);
+          currentInner = appendNodeToPage(currentInner, clone);
+        });
+      }
+
+      function updatePageFooters() {
+        const pages = Array.from(pagesEl.querySelectorAll('.page'));
+        const total = pages.length;
+
+        pages.forEach((page, index) => {
+          const footerRight = page.querySelector('.page-footer-right');
+          if (footerRight) {
+            footerRight.textContent = 'Page ' + (index + 1) + ' of ' + total;
+          }
+        });
+      }
+
+      function fitLongInlineField(field) {
+        const parent = field.parentElement;
+        if (!parent) {
+          return;
+        }
+
+        const baseSize = Number(field.getAttribute('data-base-size') || '16');
+        const minSize = Number(field.getAttribute('data-min-size') || '11.5');
+        const step = Number(field.getAttribute('data-step') || '0.5');
+
+        field.classList.remove('wrap-fallback');
+        field.style.fontSize = baseSize + 'px';
+        field.style.whiteSpace = 'nowrap';
+
+        let currentSize = baseSize;
+
+        while (currentSize > minSize && field.scrollWidth > parent.clientWidth) {
+          currentSize = Math.max(minSize, currentSize - step);
+          field.style.fontSize = currentSize + 'px';
+        }
+
+        if (field.scrollWidth > parent.clientWidth) {
+          field.classList.add('wrap-fallback');
+          field.style.whiteSpace = 'normal';
+        }
+      }
+
+      function fitLongInlineFields() {
+        const fields = Array.from(
+          document.querySelectorAll('.shrinkable-inline-field'),
+        );
+
+        fields.forEach(field => fitLongInlineField(field));
+      }
+
+      function applyScale() {
+        const viewportWidth = window.innerWidth - 28;
+        const mmToPx = 96 / 25.4;
+        const pageWidthPx = PAGE_WIDTH_MM * mmToPx;
+        const pageHeightPx = PAGE_HEIGHT_MM * mmToPx;
+
+        const readableScale = 1;
+        const fitScale = Math.min(viewportWidth / pageWidthPx, 1);
+
+        const pageCount = pagesEl.children.length;
+        const scale = mode === 'fit' ? fitScale : readableScale;
+        const scaledWidth = pageWidthPx * scale;
+        const scaledHeight =
+          pageCount * pageHeightPx * scale +
+          Math.max(pageCount - 1, 0) * PAGE_GAP_PX * scale;
+
+        previewRootEl.style.width = PAGE_WIDTH_MM + 'mm';
+        previewRootEl.style.zoom = scale;
+        previewShellEl.style.width = scaledWidth + 'px';
+        previewShellEl.style.minHeight = scaledHeight + 'px';
+
+        if (mode === 'readable') {
+          document.documentElement.scrollLeft = 0;
+          document.body.scrollLeft = 0;
+        }
+      }
+
+      function boot() {
+        paginate();
+        updatePageFooters();
+        fitLongInlineFields();
+        applyScale();
+      }
+
+      window.addEventListener('load', boot);
+      window.addEventListener('resize', boot);
+    })();
+  
+        </script>
+      </body>
+    </html>
+  
