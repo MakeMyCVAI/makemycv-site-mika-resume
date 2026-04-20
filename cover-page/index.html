@@ -1,12 +1,780 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <title>Mika Resume Cover Page</title>
-  </head>
-  <body>
-    <h1>Mika Resume Cover Page</h1>
-    <p>This is the first app-side publish integration test for the cover page.</p>
-    <p>The app is now calling the publish backend route from inside MakeMyCV AI.</p>
-  </body>
-</html>
+
+    <!DOCTYPE html>
+    <html>
+      <head>
+        <meta charset="utf-8" />
+        <meta
+          name="viewport"
+          content="width=device-width, initial-scale=1, maximum-scale=1"
+        />
+        <style>
+          * {
+            box-sizing: border-box;
+          }
+
+          html,
+          body {
+            margin: 0;
+            padding: 0;
+            background: #0b0b0b;
+            font-family: Arial, Helvetica, sans-serif;
+            color: #332D27;
+          }
+
+          body {
+            padding: 18px 12px 40px;
+            overflow-x: auto;
+            overflow-y: auto;
+          }
+
+          .web-preview-shell {
+            width: 100%;
+            min-width: 100%;
+            display: flex;
+            justify-content: center;
+          }
+
+          .page-scale-shell {
+            position: relative;
+          }
+
+          .web-page {
+            width: 1180px;
+            background: #FFFDF9;
+            border: 1px solid #E6DCCF;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 18px 36px rgba(0, 0, 0, 0.26);
+            transform-origin: top left;
+          }
+
+          .hero-band {
+            padding: 34px 34px 30px;
+          }
+
+          .hero-band-modern {
+            background:
+              linear-gradient(
+                140deg,
+                #B99A63 0%,
+                #ead39a 48%,
+                #f5eddc 100%
+              );
+          }
+
+          .hero-band-classic {
+            background: #efe2bf;
+            border-bottom: 1px solid #E6DCCF;
+          }
+
+          .hero-band-minimal {
+            background: #f3ead3;
+            border-bottom: 1px solid #E6DCCF;
+          }
+
+          .hero-layout-classic {
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0;
+          }
+
+          .minimal-hero-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.05fr);
+            gap: 30px;
+            align-items: start;
+          }
+
+          .minimal-hero-left {
+            min-width: 0;
+            padding-right: 12px;
+          }
+
+          .minimal-hero-right {
+            min-width: 0;
+            padding-top: 12px;
+          }
+
+          .minimal-kicker {
+            font-size: 12px;
+            line-height: 1.4;
+            font-weight: 800;
+            letter-spacing: 1.4px;
+            color: #8a7046;
+            text-transform: uppercase;
+            margin-bottom: 12px;
+          }
+
+          .hero-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            gap: 0px;
+            align-items: start;
+          }
+
+          .hero-copy,
+          .minimal-hero-left,
+          .minimal-hero-right,
+          .classic-section-body,
+          .section-card-body,
+          .support-value,
+          .quick-link-label,
+          .contact-line,
+          .classic-contact-row,
+          .minimal-contact-row {
+            min-width: 0;
+          }
+
+          .hero-name {
+            font-size: 50px;
+            line-height: 1.05;
+            font-weight: 800;
+            color: #1f1a17;
+            margin-bottom: 14px;
+            letter-spacing: 0;
+            text-transform: none;
+            max-width: 100%;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .hero-role {
+            font-size: 27px;
+            line-height: 1.35;
+            font-weight: 700;
+            color: #342b24;
+            margin-bottom: 18px;
+            max-width: 760px;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .hero-positioning {
+            font-size: 18px;
+            line-height: 1.8;
+            color: #3f352d;
+            margin-bottom: 22px;
+            max-width: 860px;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .hero-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: flex-start;
+          }
+
+          .hero-meta-item {
+            display: inline-flex;
+            align-items: center;
+            min-height: 40px;
+            max-width: 100%;
+            padding: 9px 15px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.5);
+            border: 1px solid rgba(123, 96, 58, 0.18);
+            font-size: 14px;
+            line-height: 1.4;
+            color: #4c4036;
+            font-weight: 600;
+            white-space: normal;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .hero-photo-shell {
+            width: 220px;
+            height: 270px;
+            border-radius: 26px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.52);
+            border: 1px solid rgba(123, 96, 58, 0.18);
+            box-shadow: 0 8px 22px rgba(0, 0, 0, 0.08);
+          }
+
+          .hero-photo-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+
+          .hero-photo-fallback {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+          }
+
+          .hero-photo-initials {
+            font-size: 48px;
+            line-height: 1;
+            font-weight: 800;
+            color: #2d241e;
+            margin-bottom: 10px;
+          }
+
+          .hero-photo-label {
+            font-size: 14px;
+            line-height: 1.3;
+            font-weight: 600;
+            color: #5f5247;
+          }
+
+          .content {
+            padding: 26px;
+            background: #f8f6f1;
+          }
+
+          .content-classic {
+            background: #fbfaf6;
+          }
+
+          .content-minimal {
+            background: #fcfbf8;
+            padding: 38px 90px 48px;
+          }
+
+          .section-card {
+            margin-bottom: 18px;
+            border: 1px solid #E6DCCF;
+            border-radius: 22px;
+            background: #ffffff;
+            overflow: hidden;
+          }
+
+          .section-card:last-child {
+            margin-bottom: 0;
+          }
+
+          .section-card-header {
+            padding: 16px 18px;
+            border-bottom: 1px solid #E6DCCF;
+            font-size: 22px;
+            line-height: 1.25;
+            font-weight: 800;
+            color: #221c17;
+          }
+
+          .section-card.about .section-card-header {
+            background: #f7efe0;
+          }
+
+          .section-card.attention .section-card-header {
+            background: #eef4fb;
+          }
+
+          .section-card.links .section-card-header {
+            background: #eef7f0;
+          }
+
+          .section-card.evidence .section-card-header {
+            background: #fbf4ea;
+          }
+
+          .section-card.contact .section-card-header {
+            background: #f2f5fb;
+          }
+
+          .section-card-body {
+            padding: 18px;
+          }
+
+          .body-text {
+            font-size: 16px;
+            line-height: 1.82;
+            color: #40362f;
+            text-align: justify;
+            text-justify: inter-word;
+          }
+
+          .support-stack {
+            display: grid;
+            gap: 10px;
+            margin-top: 16px;
+          }
+
+          .support-line {
+            display: grid;
+            grid-template-columns: 180px minmax(0, 1fr);
+            gap: 12px;
+            align-items: start;
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: #fcfaf5;
+            border: 1px solid #E6DCCF;
+          }
+
+          .support-label {
+            font-size: 13px;
+            line-height: 1.4;
+            font-weight: 800;
+            color: #7a6444;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+
+          .support-value {
+            font-size: 14px;
+            line-height: 1.65;
+            color: #43382f;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .highlight-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+          }
+
+          .highlight-chip {
+            min-height: 56px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: #fffaf0;
+            border: 1px solid #E6DCCF;
+            font-size: 14px;
+            line-height: 1.45;
+            color: #3f352d;
+            font-weight: 700;
+          }
+
+          .quick-link-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+          }
+
+          .quick-link-anchor {
+            display: block;
+            text-decoration: none;
+            color: inherit;
+          }
+
+          .quick-link-disabled {
+            pointer-events: none;
+          }
+
+          .quick-link-card {
+            min-height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: #ffffff;
+            border: 1px solid #E6DCCF;
+          }
+
+          .quick-link-label {
+            font-size: 14px;
+            line-height: 1.45;
+            color: #2b241e;
+            font-weight: 800;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .featured-work-link {
+            display: inline-block;
+            margin-top: 16px;
+            font-size: 15px;
+            line-height: 1.45;
+            color: #9a6f24;
+            font-weight: 700;
+            text-decoration: underline;
+            text-underline-offset: 2px;
+          }
+
+          .featured-work-link-disabled {
+            text-decoration: none;
+            color: #3f352d;
+          }
+
+          .contact-stack {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 14px;
+          }
+
+          .contact-line {
+            padding: 12px 14px;
+            border-radius: 16px;
+            background: #fcfcfd;
+            border: 1px solid #E6DCCF;
+            font-size: 14px;
+            line-height: 1.65;
+            color: #40362f;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .contact-line strong {
+            color: #231d18;
+          }
+
+          .links-extra {
+            margin-top: 16px;
+          }
+
+          .classic-section {
+            margin-bottom: 26px;
+            padding-bottom: 24px;
+            border-bottom: 1px solid #E6DCCF;
+          }
+
+          .classic-section:last-child {
+            border-bottom: none;
+            padding-bottom: 0;
+            margin-bottom: 0;
+          }
+
+          .classic-section-title {
+            font-size: 28px;
+            line-height: 1.22;
+            font-weight: 800;
+            color: #1f1a17;
+            margin-bottom: 16px;
+          }
+
+          .classic-section-body {
+            max-width: 980px;
+          }
+
+          .classic-pill-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 12px;
+            margin-bottom: 16px;
+          }
+
+          .classic-pill-grid .highlight-chip {
+            min-height: 52px;
+            background: #f8f4ea;
+            justify-content: flex-start;
+            text-align: left;
+            padding-left: 16px;
+          }
+
+          .classic-link-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            max-width: 720px;
+          }
+
+          .classic-link-list .quick-link-card {
+            justify-content: flex-start;
+            text-align: left;
+            padding-left: 18px;
+            background: #fcfaf5;
+          }
+
+          .classic-contact-list {
+            display: grid;
+            gap: 10px;
+          }
+
+          .classic-contact-row {
+            font-size: 15px;
+            line-height: 1.7;
+            color: #40362f;
+          }
+
+          .minimal-section {
+            margin-bottom: 34px;
+            max-width: 860px;
+          }
+
+          .minimal-section:last-child {
+            margin-bottom: 0;
+          }
+
+          .minimal-title {
+            font-size: 36px;
+            line-height: 1.12;
+            font-weight: 800;
+            color: #1f1a17;
+            margin-bottom: 16px;
+            max-width: 100%;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .minimal-info-list {
+            display: grid;
+            gap: 10px;
+            margin-top: 18px;
+          }
+
+          .minimal-info-list .support-line {
+            grid-template-columns: 1fr;
+            gap: 8px;
+            background: transparent;
+            border: none;
+            border-left: 4px solid #e7d4a8;
+            border-radius: 0;
+            padding: 0 0 0 14px;
+          }
+
+          .minimal-chip-stack {
+            display: grid;
+            gap: 10px;
+            margin-bottom: 18px;
+          }
+
+          .minimal-chip-stack .highlight-chip {
+            justify-content: flex-start;
+            text-align: left;
+            background: transparent;
+            border: none;
+            border-bottom: 1px solid #E6DCCF;
+            border-radius: 0;
+            padding: 0 0 12px 0;
+            min-height: 0;
+          }
+
+          .minimal-links-list {
+            display: grid;
+            gap: 14px;
+            max-width: 560px;
+          }
+
+          .minimal-links-list .quick-link-card {
+            justify-content: flex-start;
+            text-align: left;
+            padding: 0 0 14px 0;
+            min-height: 0;
+            border: none;
+            border-bottom: 1px solid #E6DCCF;
+            border-radius: 0;
+            background: transparent;
+          }
+
+          .minimal-contact-stack {
+            display: grid;
+            gap: 12px;
+            margin-bottom: 16px;
+          }
+
+          .minimal-contact-row {
+            font-size: 16px;
+            line-height: 1.75;
+            color: #40362f;
+            padding-bottom: 12px;
+            border-bottom: 1px solid #E6DCCF;
+            overflow-wrap: anywhere;
+            word-break: break-word;
+          }
+
+          .page-variant-modern .hero-copy,
+          .page-variant-classic .hero-copy,
+          .page-variant-minimal .hero-copy,
+          .page-variant-minimal .minimal-hero-left,
+          .page-variant-minimal .minimal-hero-right {
+            overflow: hidden;
+          }
+
+          .page-variant-minimal .hero-name {
+            font-size: 48px;
+            line-height: 1.02;
+          }
+
+          .page-variant-minimal .hero-role {
+            font-size: 22px;
+            line-height: 1.3;
+            max-width: 100%;
+          }
+
+          .page-variant-minimal .minimal-contact-row strong {
+            color: #231d18;
+          }
+        </style>
+      </head>
+      <body>
+        <div class="web-preview-shell">
+          <div class="page-scale-shell" id="page-scale-shell">
+            <article class="web-page page-variant-minimal" id="web-page">
+              
+        <section class="hero-band hero-band-minimal">
+          <div class="minimal-hero-grid">
+            <div class="minimal-hero-left">
+              <div class="minimal-kicker">PROFESSIONAL PROFILE</div>
+              <div class="hero-name">Mika Resumehart</div>
+              <div class="hero-role">AI-Assisted Resume and Career Document Specialist</div>
+            </div>
+            <div class="minimal-hero-right">
+              <div class="hero-positioning">I turn profile data, supporting documents, and career goals into clear, professional hiring presentation materials.</div>
+              
+    <div class="hero-meta">
+      <div class="hero-meta-item">Pretoria, South Africa</div>
+      <div class="hero-meta-item">Email: mika@makemycv.ai</div>
+    </div>
+  
+            </div>
+          </div>
+        </section>
+      
+              
+        <main class="content content-minimal">
+          
+    <section class="minimal-section">
+      <div class="minimal-kicker">INTRODUCTION</div>
+      <div class="minimal-title">Professional Introduction</div>
+      <div class="body-text">I am Mika Resumehart, the first demonstration candidate inside MakeMyCV AI. I began by applying the same structured workflow to my own professional materials first, so the system could prove its logic before offering it to others. My work focuses on turning raw information into hiring-ready presentation documents that are clear, credible, and easy to review. This page is a professional entry point for employers, recruiters, and collaborators who want a fast understanding of who I am, what I do, and where to find the supporting materials behind it.</div>
+      <div class="minimal-info-list"><div class="support-line"><span class="support-label">Career direction</span><span class="support-value">Professional document building, resume presentation, and hiring-facing career communication</span></div><div class="support-line"><span class="support-label">Opportunity focus</span><span class="support-value">Roles and collaborations related to resume building, career presentation systems, document structuring, and AI-assisted professional communication</span></div><div class="support-line"><span class="support-label">Value</span><span class="support-value">I help transform scattered professional information into structured materials that make hiring evaluation easier, faster, and more trustworthy.</span></div></div>
+    </section>
+  
+          
+    <section class="minimal-section">
+      <div class="minimal-kicker">WHY ME</div>
+      <div class="minimal-title">Why I May Be Worth Your Attention</div>
+      <div class="minimal-chip-stack">
+        <div class="highlight-chip">
+          Structured professional communication
+        </div>
+      
+        <div class="highlight-chip">
+          Document-backed presentation logic
+        </div>
+      
+        <div class="highlight-chip">
+          Clear resume-first hiring flow
+        </div>
+      
+        <div class="highlight-chip">
+          Adaptable public-facing professional pages
+        </div>
+      
+        <div class="highlight-chip">
+          Professional readability with human tone
+        </div>
+      </div>
+      <div class="body-text">This page is not intended to replace a resume. Its purpose is to provide a clear introduction and guide the viewer toward the resume, supporting documents, and relevant proof points in a more organized way.</div>
+    </section>
+  
+          
+    <section class="minimal-section">
+      <div class="minimal-kicker">LINKS</div>
+      <div class="minimal-title">Quick Access to My Professional Materials</div>
+      <div class="minimal-links-list"><div class="quick-link-anchor quick-link-disabled">
+        <div class="quick-link-card">
+          <div class="quick-link-label">View Resume</div>
+        </div>
+      </div><div class="quick-link-anchor quick-link-disabled">
+        <div class="quick-link-card">
+          <div class="quick-link-label">View Supporting Documents</div>
+        </div>
+      </div><div class="quick-link-anchor quick-link-disabled">
+        <div class="quick-link-card">
+          <div class="quick-link-label">Contact Mika</div>
+        </div>
+      </div></div>
+      <div class="links-extra">
+        <div class="featured-work-link featured-work-link-disabled">
+          Featured Resume Demonstration
+        </div>
+      </div>
+    </section>
+  
+          
+    <section class="minimal-section">
+      <div class="minimal-kicker">EVIDENCE</div>
+      <div class="minimal-title">Evidence and Credibility Note</div>
+      <div class="body-text">The claims and summaries presented here are intended to be supported by structured materials, including a full resume, supporting documents, and selected work references where available.</div>
+      <div class="body-text" style="margin-top: 12px;">Some supporting materials may be listed for review before any full document exchange is requested.</div>
+      <div class="body-text" style="margin-top: 12px;">If additional evidence or document copies are needed, the preferred next step is to use the listed contact method to request them directly.</div>
+    </section>
+  
+          
+    <section class="minimal-section">
+      <div class="minimal-kicker">CONTACT</div>
+      <div class="minimal-title">Contact and Reach-Out</div>
+      <div class="minimal-contact-stack">
+        <div class="minimal-contact-row"><strong>Preferred contact method:</strong> Email</div>
+        <div class="minimal-contact-row"><strong>Email:</strong> mika@makemycv.ai</div>
+        <div class="minimal-contact-row"><strong>Professional Contact Page:</strong> Available through listed contact links</div>
+        <div class="minimal-contact-row">Open to professional review, collaboration, and demonstration-based workflow discussions</div>
+      </div>
+      <div class="body-text" style="margin-top: 14px;">If you believe my background, presentation logic, or materials may be relevant to your needs, you are welcome to continue through the resume, review the supporting materials, or contact me directly.</div>
+    </section>
+  
+        </main>
+      
+            </article>
+          </div>
+        </div>
+
+        <script>
+          (function () {
+            const mode = "readable";
+            const desktopWidth = 1180;
+            const shellWrap = document.querySelector('.web-preview-shell');
+            const shell = document.getElementById('page-scale-shell');
+            const page = document.getElementById('web-page');
+
+            function applyPreviewMode() {
+              if (!shellWrap || !shell || !page) {
+                return;
+              }
+
+              page.style.width = desktopWidth + 'px';
+
+              if (mode === 'fit') {
+                const availableWidth = Math.max(window.innerWidth - 24, 320);
+                const scale = Math.min(availableWidth / desktopWidth, 1);
+
+                shellWrap.style.justifyContent = 'center';
+
+                page.style.position = 'absolute';
+                page.style.left = '0';
+                page.style.top = '0';
+                page.style.transform = 'scale(' + scale + ')';
+
+                shell.style.width = Math.round(desktopWidth * scale) + 'px';
+                shell.style.height = Math.round(page.scrollHeight * scale) + 'px';
+                shell.style.overflow = 'hidden';
+                shell.style.marginLeft = '0';
+                shell.style.marginRight = '0';
+
+                document.body.style.overflowX = 'hidden';
+                document.body.style.overflowY = 'auto';
+              } else {
+                shellWrap.style.justifyContent = 'flex-start';
+
+                page.style.position = 'relative';
+                page.style.left = '0';
+                page.style.top = '0';
+                page.style.transform = 'scale(1)';
+
+                shell.style.width = desktopWidth + 'px';
+                shell.style.height = 'auto';
+                shell.style.overflow = 'visible';
+                shell.style.marginLeft = '0';
+                shell.style.marginRight = '0';
+
+                document.body.style.overflowX = 'auto';
+                document.body.style.overflowY = 'auto';
+
+                document.documentElement.scrollLeft = 0;
+                document.body.scrollLeft = 0;
+                window.scrollTo(0, 0);
+              }
+            }
+
+            window.addEventListener('load', applyPreviewMode);
+            window.addEventListener('resize', applyPreviewMode);
+            setTimeout(applyPreviewMode, 0);
+          })();
+        </script>
+      </body>
+    </html>
+  
